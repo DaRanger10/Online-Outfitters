@@ -23,7 +23,7 @@ export function YouScreen() {
   }
 
   return (
-    <div className="screen-pad flex min-h-full flex-col gap-6 pb-8">
+    <div className="screen-pad fill-view-tabs flex flex-col gap-6 pb-8">
       <div className="pt-5">
         <PageTitle>You</PageTitle>
       </div>
@@ -32,7 +32,7 @@ export function YouScreen() {
         <Input
           value={prefs.city}
           onChange={(e) => updatePrefs({ city: e.target.value })}
-          placeholder="Brooklyn"
+          placeholder="Home city"
           autoComplete="address-level2"
           className="field-input"
         />

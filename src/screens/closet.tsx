@@ -15,7 +15,7 @@ export function ClosetScreen() {
     filter === "all" ? pieces : pieces.filter((p) => p.type === filter);
 
   return (
-    <div className="flex min-h-full flex-col pb-8">
+    <div className="fill-view-tabs flex flex-col pb-8">
       <div className="screen-pad flex items-center justify-between pt-5">
         <PageTitle>Closet</PageTitle>
         <button

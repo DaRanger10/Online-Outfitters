@@ -21,7 +21,7 @@ export function SetupPiecesScreen() {
   }
 
   return (
-    <div className="screen-pad flex min-h-full flex-col gap-6 pb-8">
+    <div className="screen-pad fill-view flex flex-col gap-6 pb-8">
       <div className="pt-6">
         <PageTitle>Add what’s in your closet</PageTitle>
         <BodyText dim>A photo and a few tags. Five pieces is enough to start.</BodyText>

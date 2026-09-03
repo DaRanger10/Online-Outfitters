@@ -36,7 +36,7 @@ export function SetupTasteScreen() {
   }
 
   return (
-    <div className="screen-pad flex min-h-full flex-col gap-6 pb-8">
+    <div className="screen-pad fill-view flex flex-col gap-6 pb-8">
       <div className="pt-6">
         <PageTitle>A few things about you</PageTitle>
         <BodyText dim>So suggestions feel like you, not a magazine.</BodyText>

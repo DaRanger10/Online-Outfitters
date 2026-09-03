@@ -59,6 +59,14 @@ body {
   min-height: 100dvh;
 }
 
+.fill-view {
+  min-height: 100dvh;
+}
+
+.fill-view-tabs {
+  min-height: calc(100dvh - 56px - env(safe-area-inset-bottom, 0px));
+}
+
 .phone-main.has-tabs {
   padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
 }
@@ -182,7 +190,8 @@ body {
 }
 
 .color-dot-selected {
-  box-shadow: 0 0 0 3px #f7f4f0, 0 0 0 5px #3d4a3a;
+  outline: 2px solid #3d4a3a;
+  outline-offset: 3px;
 }
 
 .field-input {
@@ -347,6 +356,12 @@ body {
   border-radius: 16px;
   background: #ffffff;
   text-align: left;
+}
+
+.closet-card .aspect-square,
+.photo-tap,
+.look-item .aspect-square {
+  box-shadow: inset 0 0 0 1px #e6e0d8;
 }
 
 .closet-name {

@@ -15,7 +15,7 @@ export function HomeScreen() {
   }
 
   return (
-    <div className="screen-pad flex flex-col gap-6 pb-8">
+    <div className="screen-pad fill-view-tabs flex flex-col gap-6 pb-8">
       <div className="pt-5">
         <button
           type="button"
