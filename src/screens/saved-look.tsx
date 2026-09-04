@@ -1,6 +1,7 @@
 "use client";
 
 import { occasionTitle } from "@/lib/constants";
+import { photoForLookItem } from "@/lib/image";
 import { missingPrompt } from "@/lib/outfit";
 import { useApp } from "@/context/app-state";
 import { PiecePhoto } from "@/components/photo";
@@ -8,7 +9,7 @@ import { ScreenHeader } from "@/components/screen-header";
 import { TextLink } from "@/components/ui-kit";
 
 export function SavedLookScreen({ lookId }: { lookId: string }) {
-  const { savedLookById, go, removeSavedLook } = useApp();
+  const { savedLookById, pieces, go, removeSavedLook } = useApp();
   const look = savedLookById(lookId);
 
   if (!look) {
@@ -35,7 +36,7 @@ export function SavedLookScreen({ lookId }: { lookId: string }) {
             {look.items.map((item) => (
               <div key={item.id} className="look-item">
                 <PiecePhoto
-                  src={item.photo}
+                  src={photoForLookItem(item, pieces)}
                   alt={item.nickname}
                   className="aspect-square w-full rounded-[12px]"
                 />

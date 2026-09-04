@@ -1,4 +1,5 @@
 import { DEFAULT_PREFS } from "./constants";
+import { usablePhotoSrc } from "./image";
 import type { Piece, Prefs, SavedLook } from "./types";
 
 const PREFS_KEY = "oo.v1.prefs";
@@ -51,7 +52,17 @@ export function loadSavedLooks(): SavedLook[] {
 
 export function saveSavedLooks(looks: SavedLook[]): void {
   if (!canUseBrowser()) return;
-  localStorage.setItem(LOOKS_KEY, JSON.stringify(looks));
+  // Keep look metadata in localStorage. Photos live on closet pieces in
+  // IndexedDB so a few data URLs cannot blow the ~5MB quota.
+  const slim = looks.map((look) => ({
+    ...look,
+    items: look.items.map((item) => ({ ...item, photo: null })),
+  }));
+  try {
+    localStorage.setItem(LOOKS_KEY, JSON.stringify(slim));
+  } catch {
+    // Quota or private-mode writes can fail; closet photos still remain.
+  }
 }
 
 function openDb(): Promise<IDBDatabase> {
@@ -76,7 +87,10 @@ export async function loadPieces(): Promise<Piece[]> {
       const tx = db.transaction(PIECES_STORE, "readonly");
       const req = tx.objectStore(PIECES_STORE).getAll();
       req.onsuccess = () => {
-        const rows = (req.result as Piece[]) ?? [];
+        const rows = ((req.result as Piece[]) ?? []).map((row) => ({
+          ...row,
+          photo: usablePhotoSrc(row.photo),
+        }));
         rows.sort((a, b) => a.createdAt - b.createdAt);
         resolve(rows);
       };

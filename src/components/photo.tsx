@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { CameraIcon } from "./icons";
+import { usablePhotoSrc } from "@/lib/image";
 import { cn } from "@/lib/utils";
 
 export function PiecePhoto({
@@ -14,9 +16,16 @@ export function PiecePhoto({
   className?: string;
   onClick?: () => void;
 }) {
-  const inner = src ? (
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const usable = usablePhotoSrc(src);
+  const inner = usable && failedSrc !== usable ? (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} className="h-full w-full object-cover" />
+    <img
+      src={usable}
+      alt={alt}
+      className="h-full w-full object-cover"
+      onError={() => setFailedSrc(usable)}
+    />
   ) : (
     <div className="photo-placeholder flex h-full w-full items-center justify-center text-secondary">
       <CameraIcon />

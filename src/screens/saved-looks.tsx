@@ -1,6 +1,7 @@
 "use client";
 
 import { occasionTitle } from "@/lib/constants";
+import { photoForLookItem } from "@/lib/image";
 import { useApp } from "@/context/app-state";
 import { PiecePhoto } from "@/components/photo";
 import { ScreenHeader } from "@/components/screen-header";
@@ -14,7 +15,7 @@ function formatDate(ts: number): string {
 }
 
 export function SavedLooksScreen() {
-  const { savedLooks, go, removeSavedLook } = useApp();
+  const { savedLooks, pieces, go, removeSavedLook } = useApp();
 
   return (
     <div className="flex min-h-full flex-col pb-10">
@@ -38,7 +39,7 @@ export function SavedLooksScreen() {
                   {look.items.map((item) => (
                     <div key={item.id} className="look-item">
                       <PiecePhoto
-                        src={item.photo}
+                        src={photoForLookItem(item, pieces)}
                         alt={item.nickname}
                         className="aspect-square w-full rounded-[12px]"
                       />

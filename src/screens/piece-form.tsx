@@ -46,6 +46,7 @@ export function PieceFormScreen({
   const [dressy, setDressy] = useState<Dressy>(existing?.dressy ?? "casual");
   const [nickname, setNickname] = useState(existing?.nickname ?? "");
   const [photo, setPhoto] = useState<string | null>(existing?.photo ?? null);
+  const [photoError, setPhotoError] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -60,11 +61,12 @@ export function PieceFormScreen({
 
   async function onPickPhoto(file: File | undefined) {
     if (!file) return;
+    setPhotoError(null);
     try {
       const data = await compressImage(file);
       setPhoto(data);
     } catch {
-      // Keep the previous photo if compression fails.
+      setPhotoError("Couldn’t read that photo. Try another one.");
     }
   }
 
@@ -81,9 +83,13 @@ export function PieceFormScreen({
       photo,
       createdAt: existing?.createdAt ?? Date.now(),
     };
-    await savePiece(piece);
-    setBusy(false);
-    leave();
+    try {
+      await savePiece(piece);
+      leave();
+    } catch {
+      setPhotoError("Couldn’t save this piece. Try another photo.");
+      setBusy(false);
+    }
   }
 
   async function onRemove() {
@@ -128,12 +134,12 @@ export function PieceFormScreen({
             />
           </button>
           <p className="hint mt-2 text-center">
-            A clear shot on a plain background works best.
+            {photoError ?? "A clear shot on a plain background works best."}
           </p>
           <input
             ref={fileRef}
             type="file"
-            accept="image/*"
+            accept="image/*,image/jpeg,image/png,image/webp,image/heic,image/heif"
             className="hidden"
             onChange={(e) => {
               void onPickPhoto(e.target.files?.[0]);

@@ -341,10 +341,11 @@ body {
 
 .filter-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  overflow-x: auto;
+  max-width: 100%;
+  min-width: 0;
   padding: 8px 20px 16px;
-  -webkit-overflow-scrolling: touch;
 }
 
 .filter-row .chip {
